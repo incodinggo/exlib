@@ -115,7 +115,6 @@ github.com/go-logfmt/logfmt v0.4.0/go.mod h1:3RMwSq7FuexP4Kalkev3ejPJsZTpXXBr9+V
 github.com/go-ole/go-ole v1.2.1/go.mod h1:7FAglXiTm7HKlQRDeOQ6ZNUHidzCWXuZWq/1dTyBNF8=
 github.com/go-ole/go-ole v1.2.4 h1:nNBDSCOigTSiarFpYE9J/KtEA1IOW4CNeqT9TQDqCxI=
 github.com/go-ole/go-ole v1.2.4/go.mod h1:XCwSNxSkXRo4vlyPy93sltvi/qJq0jqQhjqQNIwKuxM=
-github.com/go-redis/redis v6.14.2+incompatible h1:UE9pLhzmWf+xHNmZsoccjXosPicuiNaInPgym8nzfg0=
 github.com/go-redis/redis v6.14.2+incompatible/go.mod h1:NAIEuMOZ/fxfXJIrKDQDz8wamY7mA7PouImQ2Jvg6kA=
 github.com/go-redis/redis/v7 v7.4.0/go.mod h1:JDNMw23GTyLNC4GZu9njt15ctBQVn7xjRfnwdHj/Dcg=
 github.com/go-redis/redis/v8 v8.11.4 h1:kHoYkfZP6+pe04aFTnhDH6GDROa5yJdHJVNxV3F46Tg=
@@ -126,7 +125,6 @@ github.com/go-sql-driver/mysql v1.6.0/go.mod h1:DCzpHaOWr8IXmIStZouvnhqoel9Qv2LB
 github.com/go-stack/stack v1.8.0/go.mod h1:v0f6uXyyMGvRgIKkXu+yp6POWl0qKG85gN/melR3HDY=
 github.com/go-task/slim-sprig v0.0.0-20210107165309-348f09dbbbc0/go.mod h1:fyg7847qk6SyHyPtNmDHnmrv/HOrqktSC+C9fM+CJOE=
 github.com/go-vgo/grpclb v0.0.0-20181128171039-89526b0a742e/go.mod h1:RLBU+1pK/TEou3dxzHEhdxhgwuSFTq8UYahALbc6tN4=
-github.com/go-vgo/gt v0.20.0 h1:Yj5OZ0JtOxoPgV0jG77i+GNIHbWo1AhagvayRbHx6S4=
 github.com/go-vgo/gt v0.20.0/go.mod h1:UuZqSKlavn1bytrdx/cnbnwUBsJ3HBt0vpMHYdo49lM=
 github.com/go-vgo/gt/conf v0.0.0-20200606140533-a397c46789df h1:shJeNwLPXz6yfhpQm8OOJS4R9HbQQ7JXDKQRxAptpE0=
 github.com/go-vgo/gt/conf v0.0.0-20200606140533-a397c46789df/go.mod h1:MHs4G2Hbf6Cyl7POO3+MCEg4VJ92v68GwibmUACCjgU=
