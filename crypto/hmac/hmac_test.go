@@ -1,7 +1,7 @@
 package hmac_test
 
 import (
-	"ExLib/crypto/hmac"
+	"exlib/crypto/hmac"
 	"fmt"
 	"testing"
 )

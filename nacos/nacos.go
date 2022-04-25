@@ -34,8 +34,6 @@ type Opt struct {
 	Username             string
 	Password             string
 	LogDir               string
-	RotateTime           string
-	MaxAge               int64
 	LogLevel             string
 	ContextPath          string
 }
@@ -58,8 +56,6 @@ func Init(opt Opt) (error, *Client) {
 		Username:             opt.Username,
 		Password:             opt.Password,
 		LogDir:               opt.LogDir,
-		RotateTime:           opt.RotateTime,
-		MaxAge:               opt.MaxAge,
 		LogLevel:             opt.LogLevel,
 		ContextPath:          opt.ContextPath,
 	}

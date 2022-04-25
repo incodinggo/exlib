@@ -1,7 +1,7 @@
 package imgex_test
 
 import (
-	"ExLib/imgex"
+	"exlib/imgex"
 	"fmt"
 	"image/jpeg"
 	"os"

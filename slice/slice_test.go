@@ -1,7 +1,7 @@
 package slice_test
 
 import (
-	"ExLib/slice"
+	"exlib/slice"
 	"fmt"
 	"reflect"
 	"testing"

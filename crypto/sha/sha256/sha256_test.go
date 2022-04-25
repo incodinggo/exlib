@@ -1,7 +1,7 @@
 package sha256_test
 
 import (
-	"ExLib/crypto/sha/sha256"
+	"exlib/crypto/sha/sha256"
 	"fmt"
 	"testing"
 )

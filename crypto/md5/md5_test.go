@@ -1,7 +1,7 @@
 package md5_test
 
 import (
-	"ExLib/crypto/md5"
+	"exlib/crypto/md5"
 	"fmt"
 	"testing"
 )
