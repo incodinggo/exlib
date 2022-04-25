@@ -1,4 +1,4 @@
-module exlib
+module github.com/incodinggo/exlib
 
 go 1.18
 
