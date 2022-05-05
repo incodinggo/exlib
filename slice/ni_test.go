@@ -1,8 +1,8 @@
 package slice_test
 
 import (
-	"exlib/slice"
 	"fmt"
+	"github.com/incodinggo/exlib/slice"
 	"testing"
 )
 

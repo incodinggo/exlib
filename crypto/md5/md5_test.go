@@ -1,8 +1,8 @@
 package md5_test
 
 import (
-	"exlib/crypto/md5"
 	"fmt"
+	"github.com/incodinggo/exlib/crypto/md5"
 	"testing"
 )
 

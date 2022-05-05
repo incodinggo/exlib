@@ -12,7 +12,7 @@ import (
 	"crypto/x509"
 	"encoding/pem"
 	"errors"
-	"exlib/crypto"
+	"github.com/incodinggo/exlib/crypto"
 	"hash"
 )
 

@@ -1,9 +1,9 @@
 package chacha20_test
 
 import (
-	"exlib/crypto"
-	"exlib/crypto/chacha20"
 	"fmt"
+	"github.com/incodinggo/exlib/crypto"
+	"github.com/incodinggo/exlib/crypto/chacha20"
 	"testing"
 )
 

@@ -1,8 +1,8 @@
 package sha256_test
 
 import (
-	"exlib/crypto/sha/sha256"
 	"fmt"
+	"github.com/incodinggo/exlib/crypto/sha/sha256"
 	"testing"
 )
 

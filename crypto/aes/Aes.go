@@ -3,7 +3,7 @@ package aes
 import (
 	cptAes "crypto/aes"
 	"crypto/cipher"
-	"exlib/crypto"
+	"github.com/incodinggo/exlib/crypto"
 )
 
 type aes struct {

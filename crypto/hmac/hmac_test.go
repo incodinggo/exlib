@@ -1,8 +1,8 @@
 package hmac_test
 
 import (
-	"exlib/crypto/hmac"
 	"fmt"
+	"github.com/incodinggo/exlib/crypto/hmac"
 	"testing"
 )
 

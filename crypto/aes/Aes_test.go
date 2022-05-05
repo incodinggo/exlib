@@ -2,9 +2,9 @@ package aes_test
 
 import (
 	"encoding/hex"
-	"exlib/crypto"
-	"exlib/crypto/aes"
 	"fmt"
+	"github.com/incodinggo/exlib/crypto"
+	"github.com/incodinggo/exlib/crypto/aes"
 	"testing"
 )
 

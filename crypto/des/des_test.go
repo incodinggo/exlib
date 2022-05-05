@@ -1,9 +1,9 @@
 package des_test
 
 import (
-	"exlib/crypto"
-	"exlib/crypto/des"
 	"fmt"
+	"github.com/incodinggo/exlib/crypto"
+	"github.com/incodinggo/exlib/crypto/des"
 	"testing"
 )
 

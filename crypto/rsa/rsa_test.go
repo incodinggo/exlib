@@ -1,9 +1,9 @@
 package rsa_test
 
 import (
-	"exlib/crypto"
-	"exlib/crypto/rsa"
 	"fmt"
+	"github.com/incodinggo/exlib/crypto"
+	"github.com/incodinggo/exlib/crypto/rsa"
 	"testing"
 )
 

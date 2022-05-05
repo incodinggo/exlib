@@ -1,8 +1,8 @@
 package crc_test
 
 import (
-	"exlib/crypto/crc"
 	"fmt"
+	"github.com/incodinggo/exlib/crypto/crc"
 	"testing"
 )
 

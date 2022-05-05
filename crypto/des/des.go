@@ -3,7 +3,7 @@ package des
 import (
 	"crypto/cipher"
 	cptDes "crypto/des"
-	"exlib/crypto"
+	"github.com/incodinggo/exlib/crypto"
 )
 
 type des struct {

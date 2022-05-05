@@ -1,8 +1,8 @@
 package sha1_test
 
 import (
-	"exlib/crypto/sha/sha1"
 	"fmt"
+	"github.com/incodinggo/exlib/crypto/sha/sha1"
 	"testing"
 )
 

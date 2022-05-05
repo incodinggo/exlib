@@ -2,8 +2,8 @@ package safeMap_test
 
 import (
 	"crypto/md5"
-	"exlib/map/safeMap"
 	"fmt"
+	"github.com/incodinggo/exlib/map/safeMap"
 	"math/rand"
 	"strconv"
 	"sync"

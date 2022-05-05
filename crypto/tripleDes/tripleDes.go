@@ -3,7 +3,7 @@ package tripledes
 import (
 	"crypto/cipher"
 	"crypto/des"
-	"exlib/crypto"
+	"github.com/incodinggo/exlib/crypto"
 )
 
 type Tripledes struct {
@@ -66,7 +66,7 @@ func (t *Tripledes) cipher(block cipher.Block, de bool) (cipher.BlockMode, ciphe
 }
 func (t *Tripledes) Encrypt(origin string) *Ret {
 	b := []byte(origin)
-	block, err := des.NewTripledesCipher(t.key)
+	block, err := des.NewTripleDESCipher(t.key)
 	if err != nil {
 		return &Ret{err: err}
 	}
@@ -82,7 +82,7 @@ func (t *Tripledes) Encrypt(origin string) *Ret {
 }
 
 func (t *Tripledes) Decrypt(origin []byte) *Ret {
-	block, err := des.NewTripledesCipher(t.key)
+	block, err := des.NewTripleDESCipher(t.key)
 	if err != nil {
 		return &Ret{err: err}
 	}

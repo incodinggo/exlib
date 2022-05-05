@@ -1,8 +1,8 @@
 package imgex_test
 
 import (
-	"exlib/imgex"
 	"fmt"
+	"github.com/incodinggo/exlib/imgex"
 	"image/jpeg"
 	"os"
 	"path"
