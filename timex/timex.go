@@ -153,3 +153,9 @@ func Zero(timestamp ...int64) int64 {
 	}
 	return time.Date(t.Year(), t.Month(), t.Day(), 0, 0, 0, 0, t.Location()).Unix()
 }
+
+//IsFormattedDate Determine the date is input format
+func IsFormattedDate(date, format string) bool {
+	_, err := time.Parse(date, format)
+	return err == nil
+}
