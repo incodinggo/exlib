@@ -119,6 +119,25 @@ func Parse(dt, layout string, compatible ...bool) *T {
 	return &T{t.Unix()}
 }
 
+func ParseT(dt, layout string, compatible ...bool) *time.Time {
+	if dt == "" {
+		return nil
+	}
+	t, err := time.ParseInLocation(layout, dt, time.Local)
+	if err != nil {
+		if len(compatible) != 0 && compatible[0] {
+			for _, presetLayout := range presetLayouts {
+				if t, e := time.ParseInLocation(presetLayout, dt, time.Local); e == nil {
+					return &t
+				}
+			}
+		}
+		fmt.Println(err)
+		return nil
+	}
+	return &t
+}
+
 var WeekZhou = map[string]string{
 	"Monday":    "周一",
 	"Tuesday":   "周二",
