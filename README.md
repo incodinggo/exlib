@@ -14,5 +14,11 @@ Easy and usefully go ex tools
 ...
 
 ------------
-
-### v1.0版本持续更新中
+### Install安装
+```
+go get github.com/incodinggo/exlib
+```
+### Update更新
+```
+go get github.com/incodinggo/exlib
+```
