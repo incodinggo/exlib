@@ -3,7 +3,6 @@ package valid
 import (
 	"fmt"
 	"reflect"
-	"regexp"
 	"strconv"
 	"strings"
 )
@@ -192,14 +191,4 @@ func validate(validCond string, fieldT reflect.StructField, fieldV interface{}) 
 	}
 
 	return nil
-}
-
-func UsernameValid(username string) bool {
-	is, _ := regexp.MatchString(`^[a-zA-Z][a-zA-Z0-9_]{1,19}$`, username)
-	return is
-}
-
-func PasswordValid(password string) bool {
-	is, _ := regexp.MatchString(`^[a-zA-Z0-9_]{6,20}$`, password)
-	return is
 }

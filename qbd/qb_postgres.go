@@ -1,4 +1,4 @@
-package dbQuery
+package qbd
 
 import (
 	"fmt"
@@ -122,6 +122,13 @@ func (qb *PostgresQueryBuilder) In(vLen int) QueryBuilder {
 		vals = append(vals, "?")
 	}
 	qb.tokens = append(qb.tokens, "IN", "(", strings.Join(vals, CommaSpace), ")")
+	return qb
+}
+
+// InSQL join the IN (sql)
+// @WARNING There is an injection risk here, recommended segmented execution
+func (qb *PostgresQueryBuilder) InSQL(sql string) QueryBuilder {
+	qb.tokens = append(qb.tokens, "IN", "(", sql, ")")
 	return qb
 }
 

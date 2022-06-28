@@ -12,7 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-package dbQuery
+package qbd
 
 import "errors"
 
@@ -29,6 +29,7 @@ type QueryBuilder interface {
 	And(cond string) QueryBuilder
 	Or(cond string) QueryBuilder
 	In(vLen int) QueryBuilder
+	InSQL(sql string) QueryBuilder
 	OrderBy(fields ...string) QueryBuilder
 	Asc() QueryBuilder
 	Desc() QueryBuilder

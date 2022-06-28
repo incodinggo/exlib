@@ -12,7 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-package dbQuery
+package qbd
 
 import (
 	"fmt"
@@ -85,6 +85,13 @@ func (qb *MySQLQueryBuilder) And(cond string) QueryBuilder {
 // Or join the or cond
 func (qb *MySQLQueryBuilder) Or(cond string) QueryBuilder {
 	qb.tokens = append(qb.tokens, "OR", cond)
+	return qb
+}
+
+// InSQL join the IN (sql)
+// @WARNING There is an injection risk here, recommended segmented execution
+func (qb *MySQLQueryBuilder) InSQL(sql string) QueryBuilder {
+	qb.tokens = append(qb.tokens, "IN", "(", sql, ")")
 	return qb
 }
 
