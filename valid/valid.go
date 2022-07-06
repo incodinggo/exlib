@@ -3,64 +3,46 @@ package valid
 import (
 	"fmt"
 	"reflect"
+	"regexp"
 	"strconv"
 	"strings"
 )
 
-/**
-
-校验方式      适用字段  说明
-required      string    必填(验证非0值或非空字符串,如果可能包含0值或空字符串,则此检验不适用)
-enum          string    在指定的数据中 [q,e,r,中文]
-              int                      [1,3,9]
-              int64
-              uint64
-
-min,max       string    最(大)小长度，可以分开使用,会去除前后空白进行验证
-              int       最(大)小值，可以分开使用
-
-range[0:10]   string    长度在指定的范围内,会去除前后空白进行验证
-              int       大小在指定的范围内
-
-minlen,maxlen  string    最(大)小长度，可以分开使用,不去除前后空白进行验证,识别中英文长度
-
-minlentr,maxlentr  string    最(大)小长度，可以分开使用,去除前后空白进行验证,识别中英文长度
-
-range[0:10]   string    长度在指定的范围内
-              int       大小在指定的范围内
-
-password      string    验证是否符合密码规范(字母/数字/.-_)
-password[0:1] string    验证是否符合密码规范(字母/数字/.-_),并在指定的范围
-email         string    验证是否符合邮箱规范
-email[0:1]    string    验证是否符合邮箱规范,并在指定的范围
-letter        string    验证是否是 字母+数字
-letter[0:1]   string    验证是否是 字母+数字,并在指定的范围
-phone         string    是否符合手机号验证规范
-datetime	  string	是否为日期时间格式 2016-01-02 15:04:05
-date	      string	是否为日期格式 2016-01-02
-timezone	  string	是否为时区格式 Asia/Shanghai
-*/
-
 const (
-	Required = "required"
-	Enum     = "enum"
-	Min      = "min"
-	Max      = "max"
-	Range    = "range"
-	Password = "password"
-	Email    = "email"
-	Phone    = "phone"
-	Letter   = "letter"
-	DateTime = "datetime"
-	Date     = "date"
-	TimeZone = "timezone"
-	MinLen   = "minlen"
-	MaxLen   = "maxlen"
-	MinLenTr = "minlentr"
-	MaxLenTr = "maxlentr"
+	required = "required"
+	enum     = "enum"
+	min      = "min"
+	max      = "max"
+	rang     = "range"
+	regex    = "regex"
+	arr      = "arr"
 )
 
-func Validate(reqModel interface{}) error {
+// ValidateError 验证错误提示
+type ValidateError struct {
+	Field   string // 验证不通过的属性
+	Valid   string // 不通过的条件
+	ErrCode int    // 不通过的错误码
+}
+
+func (ve ValidateError) Error() string {
+	return fmt.Sprintf("Unverified <%s>:%s", ve.Field, ve.Valid)
+}
+
+// validateInterface 校验封装
+type validateInterface interface {
+	validate() bool
+}
+
+type validateModel struct {
+	required bool
+	fieldT   reflect.StructField
+	fieldV   interface{}
+	fieldE   reflect.Value
+	error    int64
+}
+
+func Check(reqModel interface{}) error {
 
 	typeV := reflect.ValueOf(reqModel)
 	if typeV.Kind() == reflect.Ptr {
@@ -75,6 +57,10 @@ func validateCheck(typeT reflect.Type, typeV reflect.Value) error {
 	for i := 0; i < typeT.NumField(); i++ {
 		fieldT := typeT.Field(i)
 		fieldV := typeV.Field(i)
+		if !fieldV.CanInterface() {
+			continue
+		}
+
 		//如果是匿名结构体,需要递归判断
 		if fieldT.Anonymous && fieldT.Type.Kind() == reflect.Struct {
 			err := validateCheck(fieldT.Type, fieldV)
@@ -91,17 +77,17 @@ func validateCheck(typeT reflect.Type, typeV reflect.Value) error {
 		}
 
 		// 如果校验出错，直接返回。不需要判断所有条件
-		if err := validate(validCond, fieldT, typeV.FieldByName(fieldT.Name).Interface()); err != nil {
+		if err := validate(validCond, fieldT, typeV.FieldByName(fieldT.Name).Interface(), fieldV); err != nil {
 			return err
 		}
 	}
 	return nil
 }
 
-func validate(validCond string, fieldT reflect.StructField, fieldV interface{}) error {
+func validate(validCond string, fieldT reflect.StructField, fieldV interface{}, fieldE reflect.Value) error {
 
 	// 是否必须
-	_validateModel := validateModel{fieldT: fieldT, fieldV: fieldV}
+	_validateModel := validateModel{fieldT: fieldT, fieldV: fieldV, fieldE: fieldE}
 
 	validSlice := strings.Split(validCond, ";")
 	if strings.Index(validCond, "|") != -1 {
@@ -121,63 +107,36 @@ func validate(validCond string, fieldT reflect.StructField, fieldV interface{}) 
 			continue
 		}
 
-		var valid ValidateInterface
+		var valid validateInterface
 		num, err := strconv.ParseFloat(e, 64)
 		if err != nil {
 			err = nil
 			num = 0
 		}
-		if strings.Index(v, Required) == 0 {
+		if strings.Index(v, required) == 0 {
 			// 必填
 			_validateModel.required = true
-			valid = &ValidateRequiredModel{validateModel: _validateModel}
-		} else if strings.Index(v, Range) == 0 {
+			valid = &validateRequired{validateModel: _validateModel}
+		} else if strings.Index(v, rang) == 0 {
 			// range
-			valid = &ValidateRangeModel{condition: v, validateModel: _validateModel}
-		} else if strings.Index(v, Min) == 0 {
+			valid = &validateRange{condition: v, validateModel: _validateModel}
+		} else if strings.Index(v, min) == 0 {
 			// min
-			valid = &ValidateMinModel{condition: v, validateModel: _validateModel}
-		} else if strings.Index(v, Max) == 0 {
+			valid = &validateMin{condition: v, validateModel: _validateModel}
+		} else if strings.Index(v, max) == 0 {
 			// max
-			valid = &ValidateMaxModel{condition: v, validateModel: _validateModel}
-		} else if strings.Index(v, Enum) == 0 {
+			valid = &validateMax{condition: v, validateModel: _validateModel}
+		} else if strings.Index(v, enum) == 0 {
 			// enum
-			valid = &ValidateEnumModel{condition: v, validateModel: _validateModel}
-		} else if strings.Index(v, Password) == 0 {
-			// password
-			valid = &ValidatePassModel{condition: v, validateModel: _validateModel}
-		} else if strings.Index(v, Email) == 0 {
-			// email
-			valid = &ValidateEmailModel{condition: v, validateModel: _validateModel}
-		} else if strings.Index(v, Letter) == 0 {
-			// letter
-			valid = &ValidateLetterModel{condition: v, validateModel: _validateModel}
-		} else if strings.Index(v, Phone) == 0 {
-			// phone
-			valid = &ValidateTelModel{condition: v, validateModel: _validateModel}
-		} else if strings.Index(v, DateTime) == 0 {
-			//datetime
-			valid = &ValidateDateTimeModel{condition: v, validateModel: _validateModel}
-		} else if strings.Index(v, Date) == 0 {
-			//date
-			valid = &ValidateDateModel{condition: v, validateModel: _validateModel}
-		} else if strings.Index(v, TimeZone) == 0 {
-			//timezone
-			valid = &ValidateTimeZoneModel{condition: v, validateModel: _validateModel}
-		} else if strings.Index(v, MinLen) == 0 {
-			//minlen
-			valid = &ValidateMinLenModel{condition: v, validateModel: _validateModel}
-		} else if strings.Index(v, MaxLen) == 0 {
-			//maxlen
-			valid = &ValidateMaxLenModel{condition: v, validateModel: _validateModel}
-		} else if strings.Index(v, MinLenTr) == 0 {
-			//minlen
-			valid = &ValidateMinLenModel{condition: v, validateModel: _validateModel}
-		} else if strings.Index(v, MaxLenTr) == 0 {
-			//maxlen
-			valid = &ValidateMaxLenModel{condition: v, validateModel: _validateModel}
+			valid = &validateEnum{condition: v, validateModel: _validateModel}
+		} else if strings.Index(v, regex) == 0 {
+			// regex
+			valid = &validateRegex{condition: v, validateModel: _validateModel}
+		} else if strings.Index(v, arr) == 0 {
+			// array/slice
+			valid = &validateArr{condition: v, validateModel: _validateModel}
 		} else {
-			fmt.Println("不支持的语法:", v)
+			fmt.Println("unsupported syntax:", v)
 			continue
 		}
 
@@ -191,4 +150,33 @@ func validate(validCond string, fieldT reflect.StructField, fieldV interface{}) 
 	}
 
 	return nil
+}
+
+func getRegIntValue(cond string) (values []int64) {
+	reg, _ := regexp.Compile(`[-0-9]+`)
+	regs := reg.FindAllString(cond, -1)
+
+	for _, v := range regs {
+		value, err := strconv.ParseInt(v, 10, 64)
+		if err != nil {
+			fmt.Println("need [int:int] or [int],but get string")
+			values = append(values, -1)
+			continue
+		}
+		values = append(values, value)
+	}
+	return
+}
+
+func getRegStrIntValue(cond string) (values []string) {
+	reg, _ := regexp.Compile(`[-0-9]+`)
+	regs := reg.FindAllString(cond, -1)
+	for _, v := range regs {
+		if v == "-" {
+			values = append(values, v)
+			continue
+		}
+		values = append(values, v)
+	}
+	return
 }
