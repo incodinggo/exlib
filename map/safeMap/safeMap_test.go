@@ -12,7 +12,7 @@ import (
 )
 
 func TestMap(t *testing.T) {
-	s := safeMap.New()
+	s := safeMap.New[string, int]()
 	go func() {
 		for i := 0; i < 100000; i++ {
 			time.Sleep(time.Millisecond * 1)
@@ -30,7 +30,7 @@ func TestMap(t *testing.T) {
 	go func() {
 		for i := 0; i < 100000; i++ {
 			time.Sleep(time.Millisecond * 10)
-			s.Del(fmt.Sprint(i))
+			s.Delete(fmt.Sprint(i))
 			fmt.Println("del", i)
 		}
 	}()
@@ -39,27 +39,28 @@ func TestMap(t *testing.T) {
 	}
 }
 
-func BenchmarksafeMap(b *testing.B) {
+func BenchmarkSafeMap(b *testing.B) {
 	num := 10000
-	kv := genKv(num)
-	m := safeMap.New()
-	for k, v := range kv {
+	kvs := genKv(num)
+	m := safeMap.New[int, kv]()
+	for k, v := range kvs {
 		m.Set(k, v)
 	}
 	b.ResetTimer()
 	for i := 0; i < 5; i++ {
+		m2 := safeMap.New[string, string]()
 		b.Run(strconv.Itoa(i), func(b *testing.B) {
 			b.N = 1000000
 			wg := sync.WaitGroup{}
 			wg.Add(b.N * 2)
 			for i := 0; i < b.N; i++ {
-				e := kv[rand.Intn(num)]
-				go func(k, v string) {
-					m.Set(k, v)
+				e := kvs[rand.Intn(num)]
+				go func(k string, v string) {
+					m2.Set(k, v)
 					wg.Done()
 				}(e.k, e.v)
 				go func(k string) {
-					_, _ = m.Get(k)
+					_, _ = m2.Get(k)
 					wg.Done()
 				}(e.k)
 			}

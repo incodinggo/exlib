@@ -4,23 +4,7 @@ import (
 	"fmt"
 )
 
-func I2S(in []int) []string {
-	var out []string
-	for _, e := range in {
-		out = append(out, fmt.Sprint(e))
-	}
-	return out
-}
-
-func I2S64(in []int64) []string {
-	var out []string
-	for _, e := range in {
-		out = append(out, fmt.Sprint(e))
-	}
-	return out
-}
-
-func Inf2S(in []interface{}) []string {
+func toString[T any](in []T) []string {
 	var out []string
 	for _, e := range in {
 		out = append(out, fmt.Sprint(e))

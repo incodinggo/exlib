@@ -1,7 +1,13 @@
 package convert
 
-import "github.com/gogf/gf/v2/util/gconv"
+import (
+	"fmt"
+)
 
-func Strings(in interface{}) []string {
-	return gconv.Strings(in)
+func Strings[T any](in []T) []string {
+	var out []string
+	for _, e := range in {
+		out = append(out, fmt.Sprint(e))
+	}
+	return out
 }

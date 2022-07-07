@@ -5,7 +5,7 @@ import (
 	"strings"
 )
 
-//byte
+// String byte
 func String(b []byte) string {
 	if len(b) == 0 {
 		return ""

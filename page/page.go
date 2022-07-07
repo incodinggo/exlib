@@ -19,7 +19,7 @@ func (p *Pagination) set(currPage int, pageSize int, maxCount int) {
 	p.MaxCount = maxCount
 
 	if p.PageSize <= 0 {
-		p.PageSize = 15
+		p.PageSize = 20
 	}
 	if p.MaxCount <= 0 {
 		p.MaxCount = 0

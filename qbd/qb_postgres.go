@@ -77,7 +77,7 @@ func (qb *PostgresQueryBuilder) RightJoin(table string) QueryBuilder {
 	return qb
 }
 
-// On join with on cond
+// On join with on ternary
 func (qb *PostgresQueryBuilder) On(cond string) QueryBuilder {
 	var str string
 	cond = strings.Replace(cond, " ", "", -1)
@@ -97,19 +97,19 @@ func (qb *PostgresQueryBuilder) On(cond string) QueryBuilder {
 	return qb
 }
 
-// Where join the Where cond
+// Where join the Where ternary
 func (qb *PostgresQueryBuilder) Where(cond string) QueryBuilder {
 	qb.tokens = append(qb.tokens, "WHERE", cond)
 	return qb
 }
 
-// And join the and cond
+// And join the and ternary
 func (qb *PostgresQueryBuilder) And(cond string) QueryBuilder {
 	qb.tokens = append(qb.tokens, "AND", cond)
 	return qb
 }
 
-// Or join the or cond
+// Or join the or ternary
 func (qb *PostgresQueryBuilder) Or(cond string) QueryBuilder {
 	qb.tokens = append(qb.tokens, "OR", cond)
 	return qb
@@ -170,7 +170,7 @@ func (qb *PostgresQueryBuilder) GroupBy(fields ...string) QueryBuilder {
 	return qb
 }
 
-// Having join the Having cond
+// Having join the Having ternary
 func (qb *PostgresQueryBuilder) Having(cond string) QueryBuilder {
 	qb.tokens = append(qb.tokens, "HAVING", cond)
 	return qb

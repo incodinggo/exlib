@@ -3,7 +3,7 @@ package tripledes_test
 import (
 	"fmt"
 	"github.com/incodinggo/exlib/crypto"
-	"github.com/incodinggo/exlib/crypto/tripledes"
+	"github.com/incodinggo/exlib/crypto/tripleDes"
 	"testing"
 )
 

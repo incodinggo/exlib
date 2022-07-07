@@ -1,13 +1,39 @@
 package convert
 
-import "github.com/gogf/gf/v2/util/gconv"
+import (
+	"strconv"
+)
 
-func Ints(in interface{}) []int {
-	return gconv.SliceInt(in)
+func Ints(in []string) []int {
+	var out []int
+	for _, e := range in {
+		i, err := strconv.ParseInt(e, 10, 64)
+		if err != nil {
+			return nil
+		}
+		out = append(out, int(i))
+	}
+	return out
 }
-func Int32s(in interface{}) []int32 {
-	return gconv.SliceInt32(in)
+func Int32s(in []string) []int32 {
+	var out []int32
+	for _, e := range in {
+		i, err := strconv.ParseInt(e, 10, 64)
+		if err != nil {
+			return nil
+		}
+		out = append(out, int32(i))
+	}
+	return out
 }
-func Int64s(in interface{}) []int64 {
-	return gconv.SliceInt64(in)
+func Int64s(in []string) []int64 {
+	var out []int64
+	for _, e := range in {
+		i, err := strconv.ParseInt(e, 10, 64)
+		if err != nil {
+			return nil
+		}
+		out = append(out, i)
+	}
+	return out
 }

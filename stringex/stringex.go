@@ -1,7 +1,7 @@
 package stringex
 
 import (
-	"github.com/gogf/gf/v2/text/gstr"
+	"fmt"
 	"regexp"
 	"strconv"
 	"strings"
@@ -60,10 +60,14 @@ func Split(s, sep string, needSpace ...bool) *T {
 	return &T{arr}
 }
 
-func Convert(s []string) {
-
-}
-
-func Join(in interface{}, sep string) string {
-	return gstr.JoinAny(in, sep)
+func Join[T any](in []T, sep string) string {
+	sb := strings.Builder{}
+	for i := 0; i < len(in); i++ {
+		sb.WriteString(fmt.Sprint(in[i]))
+		if i == len(in)-1 {
+			continue
+		}
+		sb.WriteString(sep)
+	}
+	return sb.String()
 }

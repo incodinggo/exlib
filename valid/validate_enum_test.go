@@ -3,7 +3,7 @@ package valid_test
 import (
 	"encoding/json"
 	"fmt"
-	"github.com/incodinggo/validation/valid"
+	"github.com/incodinggo/exlib/valid"
 	"testing"
 )
 

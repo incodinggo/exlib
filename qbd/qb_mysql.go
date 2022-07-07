@@ -64,32 +64,32 @@ func (qb *MySQLQueryBuilder) RightJoin(table string) QueryBuilder {
 	return qb
 }
 
-// On join with on cond
+// On join with on ternary
 func (qb *MySQLQueryBuilder) On(cond string) QueryBuilder {
 	qb.tokens = append(qb.tokens, "ON", cond)
 	return qb
 }
 
-// Where join the Where cond
+// Where join the Where ternary
 func (qb *MySQLQueryBuilder) Where(cond string) QueryBuilder {
 	qb.tokens = append(qb.tokens, "WHERE", cond)
 	return qb
 }
 
-// And join the and cond
+// And join the and ternary
 func (qb *MySQLQueryBuilder) And(cond string) QueryBuilder {
 	qb.tokens = append(qb.tokens, "AND", cond)
 	return qb
 }
 
-// Or join the or cond
+// Or join the or ternary
 func (qb *MySQLQueryBuilder) Or(cond string) QueryBuilder {
 	qb.tokens = append(qb.tokens, "OR", cond)
 	return qb
 }
 
 // InSQL join the IN (sql)
-// @WARNING There is an injection risk here, recommended segmented execution
+// Deprecate There is an injection risk here, recommended segmented execution
 func (qb *MySQLQueryBuilder) InSQL(sql string) QueryBuilder {
 	qb.tokens = append(qb.tokens, "IN", "(", sql, ")")
 	return qb
@@ -106,6 +106,7 @@ func (qb *MySQLQueryBuilder) In(vLen int) QueryBuilder {
 }
 
 // OrderBy join the Order by fields
+// There is an injection risk here
 func (qb *MySQLQueryBuilder) OrderBy(fields ...string) QueryBuilder {
 	qb.tokens = append(qb.tokens, "ORDER BY", strings.Join(fields, CommaSpace))
 	return qb
@@ -136,12 +137,14 @@ func (qb *MySQLQueryBuilder) Offset(offset int) QueryBuilder {
 }
 
 // GroupBy join the Group by fields
+// There is an injection risk here
 func (qb *MySQLQueryBuilder) GroupBy(fields ...string) QueryBuilder {
 	qb.tokens = append(qb.tokens, "GROUP BY", strings.Join(fields, CommaSpace))
 	return qb
 }
 
-// Having join the Having cond
+// Having join the Having ternary
+// There is an injection risk here
 func (qb *MySQLQueryBuilder) Having(cond string) QueryBuilder {
 	qb.tokens = append(qb.tokens, "HAVING", cond)
 	return qb

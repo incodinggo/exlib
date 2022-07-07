@@ -1,27 +1,27 @@
 package convert
 
-import "strconv"
+import (
+	"strconv"
+)
 
-func Int64(in []string) []int64 {
-	var out []int64
-	for _, e := range in {
-		i, err := strconv.ParseInt(e, 10, 64)
-		if err != nil {
-			return nil
-		}
-		out = append(out, i)
+func Int(in string) int {
+	i, err := strconv.ParseInt(in, 10, 64)
+	if err != nil {
+		panic("not a number")
 	}
-	return out
+	return int(i)
 }
-
-func Int(in []string) []int {
-	var out []int
-	for _, e := range in {
-		i, err := strconv.ParseInt(e, 10, 64)
-		if err != nil {
-			return nil
-		}
-		out = append(out, int(i))
+func Int32(in string) int32 {
+	i, err := strconv.ParseInt(in, 10, 64)
+	if err != nil {
+		panic("not a number")
 	}
-	return out
+	return int32(i)
+}
+func Int64(in string) int64 {
+	i, err := strconv.ParseInt(in, 10, 64)
+	if err != nil {
+		panic("not a number")
+	}
+	return i
 }
